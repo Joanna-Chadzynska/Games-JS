@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>My Website</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png" />
-</head>
-<body>
-  <div class="ck-site">
-    <h1>Hello World!</h1>
-    <button class="btn btn-primary">Button</button>
-  </div>
-</body>
+  <head>
+    <title>Hangman</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="h1 display-1">Hangman</h1>
+      <section id="hangman" class="container">
+        <div class="my-4" id="category__wrapper">Category: <span id="category"></span></div>
+
+        <div id="output">
+          <!-- Gallows is displayed here -->
+          <div class="gallows" id="gallows">
+            <span class="step rope hidden"></span>
+            <span class="horizontalScaffold"></span>
+            <span class="verticalScaffold"></span>
+            <span class="platform"></span>
+            <!-- Body parts appear here -->
+            <div class="body">
+              <span class="step head hidden"></span>
+              <span class="step torso hidden"></span>
+              <span class="step leftArm hidden"></span>
+              <span class="step rightArm hidden"></span>
+              <span class="step leftLeg hidden"></span>
+              <span class="step rightLeg hidden"></span>
+            </div>
+          </div>
+        </div>
+
+        <div id="word" class="p-4"></div>
+        <div id="letters" class="my-5 container-fluid" aria-label="letters"></div>
+      </section>
+    </div>
+  </body>
 </html>
