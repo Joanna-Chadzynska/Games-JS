@@ -7,7 +7,21 @@
 // Base Files
 @import 'base/globals';
 
-// If we are not using Scoped styles, we create components
+@import 'partials/gallows'; // If we are not using Scoped styles, we create components
 // Components structure (BEM no strict)
 // More info: http://bit.ly/ck-bem-no-strict
 // @import 'components/ck-site';
+#word {
+  border: 3px solid black;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  font-size: 3rem;
+  text-align: center;
+}
+
+#category__wrapper {
+  font-size: 2rem;
+}
