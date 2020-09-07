@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Minesweeper</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png" />
+  </head>
+  <body>
+    <main class="game container">
+      <header class="header">
+        <article class="header__counter">0</article>
+        <button class="header__reset">
+          <use href="./assets/images/sprite.svg#neutral"></use>
+        </button>
+        <article class="header__counter">0</article>
+      </header>
+
+      <article class="game__board"></article>
+
+      <article class="game__panel">
+        <header class="panel__header">
+          <h1 class="panel__heading">Select Difficulty</h1>
+        </header>
+        <section class="panel__buttons">
+          <button class="button">Easy</button>
+          <button class="button">Normal</button>
+          <button class="button">Expert</button>
+        </section>
+      </article>
+
+      <article class="modal hide">
+        <section class="modal__content">
+          <h2 class="modal__text">You Won!</h2>
+          <button class="modal__button">Play Again</button>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

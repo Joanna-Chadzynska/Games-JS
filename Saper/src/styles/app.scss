@@ -1,0 +1,14 @@
+// Base Helpers
+@import 'base/fonts', 'base/icons', 'base/states', 'base/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+// Vendor
+@import 'vendor/bootstrap';
+
+// Base Files
+@import 'base/globals';
+@import 'partials/game';
+
+// If we are not using Scoped styles, we create components
+// Components structure (BEM no strict)
+// More info: http://bit.ly/ck-bem-no-strict
+// @import 'components/ck-site';
