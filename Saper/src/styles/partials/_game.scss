@@ -1,6 +1,6 @@
-$primary: #c0c0c0;
+$primary: #C0C0C0;
 $primary-dark: #808080;
-$alarm-color: #f80000;
+$alarm-color: #F80000;
 
 .game {
   background-color: $primary;
@@ -12,12 +12,12 @@ $alarm-color: #f80000;
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 0.8rem;
+  padding: .8rem;
 
   &__counter {
     background-color: #000000;
     color: $alarm-color;
     font-family: DigitalDream, sans-serif;
-    padding: 0.5rem;
+    padding: .5rem;
   }
 }
