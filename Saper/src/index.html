@@ -37,7 +37,7 @@
       </defs>
     </svg>
 
-    <main class="game">
+    <main class="game container">
       <header class="header border__game border__game--convex">
         <article class="header__counter">0</article>
         <button class="header__reset border__game border__game--concave">
@@ -56,18 +56,16 @@
         <article class="header__counter">0</article>
       </header>
 
-      <article class="game__board border__game border__game--convex" data-board>
-        <!-- <div class="cell border__game border__game--concave"></div> -->
-      </article>
+      <article class="game__board border__game border__game--convex" data-board></article>
 
       <article class="game__panel border__game border__game--convex">
         <header class="panel__header">
           <h1 class="panel__heading">Select Difficulty</h1>
         </header>
         <section class="panel__buttons">
-          <button class="button">Easy</button>
-          <button class="button">Normal</button>
-          <button class="button">Expert</button>
+          <button class="button" data-button-easy>Easy</button>
+          <button class="button" data-button-normal>Normal</button>
+          <button class="button" data-button-expert>Expert</button>
         </section>
       </article>
 
