@@ -14,7 +14,7 @@ module.exports = (env) => {
         loader: styleLoaders[env] // Creates style nodes from JS strings
       },
       {
-        loader: 'css-loader' // Translates CSS into CommonJS
+        loader: 'css-loader'
       },
       {
         loader: 'postcss-loader', // More CSS Plugins
@@ -23,10 +23,13 @@ module.exports = (env) => {
         }
       },
       {
-        loader: 'sass-loader', // Compiles Sass to CSS, using Node Sass by default
+        loader: 'resolve-url-loader'
+      },
+      {
+        loader: 'sass-loader',
         options: {
-          //includePaths: ['absolute/path/a']
-        }
+          sourceMap: true
+        } // Compiles Sass to CSS, using Node Sass by default
       }
     ]
   };
