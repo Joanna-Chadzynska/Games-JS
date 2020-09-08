@@ -157,6 +157,11 @@ $colors: (
   &--concave {
     border-color: #ffffff $primary-dark $primary-dark #ffffff;
   }
+
+  &--revealed {
+    border-width: 0.1rem;
+    border-color: $primary-dark;
+  }
 }
 
 .game__board {
