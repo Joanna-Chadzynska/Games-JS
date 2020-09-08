@@ -23,4 +23,15 @@ export class Cell extends UI {
     const element = `<div class="cell border__game border__game--concave" data-cell data-x="${this.x}" data-y="${this.y}"></div>`;
     return element;
   }
+
+  revealCell() {
+    this.isReveal = true;
+    this.element.classList.remove('border__game--concave');
+    this.element.classList.add('border__game--revealed');
+  }
+
+  toggleFlag() {
+    this.isFlagged = !this.isFlagged;
+    this.element.classList.toggle('cell--is-flag');
+  }
 }
