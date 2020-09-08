@@ -45,7 +45,7 @@ export class Game extends UI {
     this.numberOfCols = null;
     this.numberOfMines = null;
     this.cells = [];
-    this.cellsElements = this.getElements(this.UiSelectors.cell);
+    this.cellsElements;
     this.board = null;
     this.buttons = {
       easy: null,
@@ -66,6 +66,33 @@ export class Game extends UI {
     this.buttons.normal = this.getElement(this.UiSelectors.normalButton);
     this.buttons.expert = this.getElement(this.UiSelectors.expertButton);
   }
+
+  private addCellsEventListeners() {
+    this.cellsElements.forEach((element) => {
+      element.addEventListener('click', this.handleCellClick);
+      element.addEventListener('contextmenu', this.handleContextMenu);
+    });
+  }
+
+  private handleCellClick = (e: Event) => {
+    const target = e.target;
+    const rowIndex = Number(target.dataset?.y);
+    const colIndex = Number(target.dataset.x);
+
+    const cell = this.cells[rowIndex][colIndex];
+    cell.revealCell();
+  };
+  private handleContextMenu = (e: Event) => {
+    e.preventDefault();
+    const target = e.target;
+    const rowIndex = Number(target.dataset?.y);
+    const colIndex = Number(target.dataset.x);
+
+    const cell = this.cells[rowIndex][colIndex];
+    if (cell.isReveal) return;
+
+    cell.toggleFlag();
+  };
 
   private addButtonsEventListeners() {
     this.buttons.easy.addEventListener('click', () => {
@@ -102,6 +129,9 @@ export class Game extends UI {
     // draw cells
     this.drawCells();
     this.renderBoard();
+    this.cellsElements = this.getElements(this.UiSelectors.cell);
+
+    this.addCellsEventListeners();
   }
 
   private setStyles() {
