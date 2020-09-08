@@ -2,7 +2,10 @@
 export class UI {
   UiSelectors = {
     board: '[data-board]',
-    cell: '[data-cell]'
+    cell: '[data-cell]',
+    easyButton: '[data-button-easy]',
+    normalButton: '[data-button-normal]',
+    expertButton: '[data-button-expert]'
   };
 
   getElement(selector: string) {
