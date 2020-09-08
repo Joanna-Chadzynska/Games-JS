@@ -91,9 +91,9 @@ export class Game extends UI {
 
   start() {
     this.handleElements(); // get board element and other elements
-    this.addButtonsEventListeners();
     this.counter.init();
     this.timer.init();
+    this.addButtonsEventListeners();
     this.newGame();
   }
 
@@ -106,32 +106,52 @@ export class Game extends UI {
     this.numberOfCols = cols;
     this.numberOfMines = mines;
 
+    this.counter.setValue(this.numberOfMines);
+    this.timer.resetTimer();
+
     this.cellsToReveal = this.numberOfCols * this.numberOfRows - this.numberOfMines;
 
-    this.counter.setValue(this.numberOfMines);
     this.setStyles();
     // draw cells
     this.drawCells();
     this.renderBoard();
-    this.cellsElements = this.getElements(this.UiSelectors.cell);
-
     this.placeMinesInCells();
 
+    this.cellsElements = this.getElements(this.UiSelectors.cell);
+    this.buttons.reset.changeEmotion('neutral');
+
+    this.isGameFinished = false;
+    this.cellsRevealed = 0;
+
     this.addCellsEventListeners();
-    this.timer.startTimer();
   }
 
   private endGame(isWin?: boolean) {
     this.isGameFinished = true;
     this.timer.stopTimer();
+    this.modal.buttonText = 'Close';
 
     if (!isWin) {
       this.revealMines();
+      this.modal.infoText = 'You Lost! Try again!';
+      this.modal.setText();
+      this.modal.toggleModal();
+      this.buttons.reset.changeEmotion('negative');
+      return;
     }
+
+    this.modal.infoText =
+      this.timer.numberOfSeconds < this.timer.maxNumberOfSeconds
+        ? `You Won! It took you ${this.timer.numberOfSeconds} seconds, congratulations!`
+        : `You Won, Congratulations!`;
+    this.modal.setText();
+    this.modal.toggleModal();
+    this.buttons.reset.changeEmotion('positive');
   }
 
   private handleElements() {
     this.board = this.getElement(this.UiSelectors.board);
+    this.buttons.modal = this.getElement(this.UiSelectors.modal);
     this.buttons.easy = this.getElement(this.UiSelectors.easyButton);
     this.buttons.normal = this.getElement(this.UiSelectors.normalButton);
     this.buttons.expert = this.getElement(this.UiSelectors.expertButton);
@@ -152,6 +172,10 @@ export class Game extends UI {
   }
 
   private addButtonsEventListeners() {
+    this.buttons.modal.addEventListener('click', this.modal.toggleModal);
+    this.buttons.reset.element.addEventListener('click', () => {
+      this.handleNewGameClick();
+    });
     this.buttons.easy.addEventListener('click', () => {
       this.handleNewGameClick(this.config.easy.rows, this.config.easy.cols, this.config.easy.mines);
     });
@@ -161,11 +185,13 @@ export class Game extends UI {
     this.buttons.expert.addEventListener('click', () => {
       this.handleNewGameClick(this.config.expert.rows, this.config.expert.cols, this.config.expert.mines);
     });
-
-    // add event listener to reset button
   }
 
-  private handleNewGameClick(rows: number = null, cols: number = null, mines: number = null) {
+  private handleNewGameClick(
+    rows: number = this.numberOfRows,
+    cols: number = this.numberOfCols,
+    mines: number = this.numberOfMines
+  ) {
     this.removeCellsEventListeners();
     this.newGame(rows, cols, mines);
   }
@@ -186,8 +212,13 @@ export class Game extends UI {
       console.log('bomb');
       return;
     }
+
     cell.revealCell();
     this.setCellValue(cell);
+
+    if (this.cellsRevealed === this.cellsToReveal && !this.isGameFinished) {
+      this.endGame(true);
+    }
   }
 
   private revealMines() {
@@ -212,6 +243,7 @@ export class Game extends UI {
 
     cell.value = minesCount;
     cell.revealCell();
+    this.cellsRevealed++;
 
     if (!cell.value) {
       for (

@@ -2,11 +2,20 @@
 import { UI } from './Ui';
 
 export class Modal extends UI {
-  buttonText = '';
-  infoText = '';
-  element = this.getElement(this.UiSelectors.modal);
-  button = this.getElement(this.UiSelectors.modalButton);
-  header = this.getElement(this.UiSelectors.modalHeader);
+  buttonText: string;
+  infoText: string;
+  element: Element;
+  button: Element;
+  header: Element;
+
+  constructor() {
+    super();
+    this.buttonText = '';
+    this.infoText = '';
+    this.element = this.getElement(this.UiSelectors.modal);
+    this.button = this.getElement(this.UiSelectors.modalButton);
+    this.header = this.getElement(this.UiSelectors.modalHeader);
+  }
 
   toggleModal = () => {
     this.element.classList.toggle('hide');
