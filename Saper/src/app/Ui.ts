@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 export class UI {
-  UiSelectors = {
+  public UiSelectors = {
     board: '[data-board]',
     cell: '[data-cell]',
+    counter: '[data-counter]',
+    timer: '[data-timer]',
     easyButton: '[data-button-easy]',
     normalButton: '[data-button-normal]',
-    expertButton: '[data-button-expert]'
+    expertButton: '[data-button-expert]',
+    resetButton: '[data-button-reset]',
+    modal: '[data-modal]',
+    modalHeader: '[data-modal-header]',
+    modalButton: '[data-modal-button]'
   };
 
-  getElement(selector: string) {
+  public getElement(selector: string) {
     return document.querySelector(selector);
   }
-  getElements(selector: string) {
+  public getElements(selector: string) {
     return document.querySelectorAll(selector);
   }
 }
