@@ -16,22 +16,6 @@ type Buttons = {
   modal?: Element;
 };
 
-type IGame = {
-  numberOfRows: null | number;
-  numberOfCols: null | number;
-  numberOfMines: null | number;
-  board: null | Element;
-  buttons: Buttons;
-  cells: any[][];
-  cellsElements: NodeListOf<Element>;
-  counter: Counter;
-  modal: Modal;
-  timer: Timer;
-  isGameFinished: boolean;
-  cellsToReveal: number;
-  cellsRevealed: number;
-};
-
 /* eslint-disable @typescript-eslint/no-empty-function */
 export class Game extends UI {
   private config = {
@@ -112,7 +96,7 @@ export class Game extends UI {
     this.cellsToReveal = this.numberOfCols * this.numberOfRows - this.numberOfMines;
 
     this.setStyles();
-    // draw cells
+
     this.drawCells();
     this.renderBoard();
     this.placeMinesInCells();
