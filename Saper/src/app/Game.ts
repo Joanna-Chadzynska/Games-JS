@@ -3,6 +3,14 @@
 import { Cell } from './Cell';
 import { UI } from './Ui';
 
+type Buttons = {
+  modal?: null;
+  easy: Element;
+  normal: Element;
+  expert: Element;
+  reset?: null;
+};
+
 /* eslint-disable @typescript-eslint/no-empty-function */
 export class Game extends UI {
   private config = {
@@ -22,24 +30,63 @@ export class Game extends UI {
       mines: 99
     }
   };
-  numberOfRows: null | number;
+  private numberOfRows: null | number;
   private numberOfCols: null | number;
   private numberOfMines: null | number;
   cells: any[][];
+  cellsElements: NodeListOf<Element>;
   board: null | Element;
+  buttons: Buttons;
 
   constructor() {
     super();
+
+    this.numberOfRows = null;
+    this.numberOfCols = null;
+    this.numberOfMines = null;
     this.cells = [];
+    this.cellsElements = this.getElements(this.UiSelectors.cell);
+    this.board = null;
+    this.buttons = {
+      easy: null,
+      normal: null,
+      expert: null
+    };
   }
 
   start() {
-    this.handleElements();
+    this.handleElements(); // get board element and other elements
+    this.addButtonsEventListeners();
     this.newGame();
   }
 
   private handleElements() {
     this.board = this.getElement(this.UiSelectors.board);
+    this.buttons.easy = this.getElement(this.UiSelectors.easyButton);
+    this.buttons.normal = this.getElement(this.UiSelectors.normalButton);
+    this.buttons.expert = this.getElement(this.UiSelectors.expertButton);
+  }
+
+  private addButtonsEventListeners() {
+    this.buttons.easy.addEventListener('click', () => {
+      this.handleNewGameClick(this.config.easy.rows, this.config.easy.cols, this.config.easy.mines);
+    });
+    this.buttons.normal.addEventListener('click', () => {
+      this.handleNewGameClick(this.config.normal.rows, this.config.normal.cols, this.config.normal.mines);
+    });
+    this.buttons.expert.addEventListener('click', () => {
+      this.handleNewGameClick(this.config.expert.rows, this.config.expert.cols, this.config.expert.mines);
+    });
+  }
+
+  private removeCellsEventListeners() {
+    this.cellsElements.forEach((element) => {});
+  }
+
+  private handleNewGameClick(rows: number = null, cols: number = null, mines: number = null) {
+    // this.removeCellsEventListeners();
+
+    this.newGame(rows, cols, mines);
   }
 
   private newGame(
@@ -50,11 +97,19 @@ export class Game extends UI {
     this.numberOfRows = rows;
     this.numberOfCols = cols;
     this.numberOfMines = mines;
+
+    this.setStyles();
+    // draw cells
     this.drawCells();
     this.renderBoard();
   }
 
+  private setStyles() {
+    document.documentElement.style.setProperty('--cells-in-row', `${this.numberOfCols}`);
+  }
+
   private drawCells() {
+    this.cells.length = 0;
     for (let row = 0; row < this.numberOfRows; row++) {
       this.cells[row] = [];
 
@@ -65,6 +120,10 @@ export class Game extends UI {
   }
 
   private renderBoard() {
+    while (this.board.firstChild) {
+      this.board.removeChild(this.board.lastChild);
+    }
+
     this.cells.flat().forEach((cell: Cell) => {
       this.board.insertAdjacentHTML('beforeend', cell.createElement());
       cell.element = cell.getElement(cell.selector);
