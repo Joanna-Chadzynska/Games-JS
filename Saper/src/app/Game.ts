@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import { Cell } from './Cell';
@@ -181,11 +182,12 @@ export class Game extends UI {
   private clickCell(cell: any) {
     if (this.isGameFinished || cell.isFlagged) return;
     if (cell.isMine) {
-      this.endGame();
+      this.endGame(false);
       console.log('bomb');
       return;
     }
     cell.revealCell();
+    this.setCellValue(cell);
   }
 
   private revealMines() {
@@ -195,7 +197,41 @@ export class Game extends UI {
       .forEach((cell) => cell.revealCell());
   }
 
-  private setCellValues(cell: any) {}
+  private setCellValue(cell: any) {
+    let minesCount = 0;
+
+    for (let rowIndex = Math.max(cell.y - 1, 0); rowIndex <= Math.min(cell.y + 1, this.numberOfRows - 1); rowIndex++) {
+      for (
+        let colIndex = Math.max(cell.x - 1, 0);
+        colIndex <= Math.min(cell.x + 1, this.numberOfCols - 1);
+        colIndex++
+      ) {
+        if (this.cells[rowIndex][colIndex].isMine) minesCount++;
+      }
+    }
+
+    cell.value = minesCount;
+    cell.revealCell();
+
+    if (!cell.value) {
+      for (
+        let rowIndex = Math.max(cell.y - 1, 0);
+        rowIndex <= Math.min(cell.y + 1, this.numberOfRows - 1);
+        rowIndex++
+      ) {
+        for (
+          let colIndex = Math.max(cell.x - 1, 0);
+          colIndex <= Math.min(cell.x + 1, this.numberOfCols - 1);
+          colIndex++
+        ) {
+          const cell = this.cells[rowIndex][colIndex];
+          if (!cell.isReveal) {
+            this.clickCell(cell);
+          }
+        }
+      }
+    }
+  }
 
   private handleContextMenu = (e: Event) => {
     e.preventDefault();
