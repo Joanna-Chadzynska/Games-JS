@@ -1,0 +1,14 @@
+body {
+  background-color: red;
+}
+body h1 {
+  font-size: 3rem;
+}
+
+.container {
+  max-width: 65em;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/*# sourceMappingURL=/src.62c16509.css.map */

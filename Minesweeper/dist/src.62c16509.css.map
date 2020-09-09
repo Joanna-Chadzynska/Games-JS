@@ -1,0 +1,1 @@
+{"version":3,"sources":["..\\src\\assets\\styles\\main.scss"],"names":[],"mappings":"AAAA;EACC;;AAEA;EACC;;;AAIF;EACC;EACA;EACA","file":"src.62c16509.css","sourceRoot":"..\\public","sourcesContent":["body {\r\n\tbackground-color: red;\r\n\r\n\th1 {\r\n\t\tfont-size: 3rem;\r\n\t}\r\n}\r\n\r\n.container {\r\n\tmax-width: 65em;\r\n\twidth: 80%;\r\n\tmargin: 0 auto;\r\n}\r\n"]}
