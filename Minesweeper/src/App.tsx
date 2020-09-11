@@ -9,15 +9,17 @@ import { GlobalStyle } from './styles/globalStyles';
 import { Header, Board, Panel } from './features';
 
 const App = () => {
-	console.log('app');
-	const [cols, setCols] = useState(9);
-	const [rows, setRows] = useState(9);
+	const [config, setConfig] = useState({
+		cols: 9,
+		rows: 5,
+		mines: 10,
+	});
 	return (
 		<Theme>
 			<GlobalStyle />
-			<Main cellsInRow={cols}>
+			<Main cellsInRow={config.cols}>
 				<Header />
-				<Board cols={cols} rows={rows} />
+				<Board cols={config.cols} rows={config.rows} mines={config.mines} />
 				<Panel />
 			</Main>
 		</Theme>

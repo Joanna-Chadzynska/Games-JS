@@ -45,8 +45,25 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer;
     }
 
+    .border {
+  border: ${({ theme }) => theme.gameSizes.borderWidth} solid;
+}
+.border--convex {
+  border-color: ${({ theme }) => theme.colors.primary.dark} #fff #fff ${({
+	theme,
+}) => theme.colors.primary.dark};
+}
+.border--concave {
+  border-color: #fff ${({ theme }) => theme.colors.primary.dark} ${({
+	theme,
+}) => theme.colors.primary.dark} #fff;
+}
+.border--revealed {
+  border-width: 0.1rem;
+  border-color: ${({ theme }) => theme.colors.primary.dark};
+}
 
-    .cell-info-1 {
+.cell-info-1 {
   color: var(--info-one-color);
 }
 .cell-info-2 {
