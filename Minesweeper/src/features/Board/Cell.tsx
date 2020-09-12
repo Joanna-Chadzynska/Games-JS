@@ -1,31 +1,38 @@
 import React from 'react';
-import { ICell } from './Board';
+import { ICell } from '../Game/gameSlice';
 import { StyledCell } from './styles';
 
 export interface CellProps {
-	handleRevealCell: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	value: ICell;
+	handleRevealCell?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	contextMenu?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	cell: ICell;
 }
 
-const Cell: React.SFC<CellProps> = ({ handleRevealCell, value }) => {
+const Cell: React.SFC<CellProps> = ({
+	handleRevealCell,
+	contextMenu,
+	cell,
+}) => {
 	const getValue = () => {
-		if (!value.isRevealed) {
-			return value.isFlagged ? '🚩' : null;
+		if (!cell.isRevealed) {
+			return cell.isFlagged ? '🚩' : null;
 		}
-		if (value.isMine) {
+		if (cell.isMine) {
 			return '💣';
 		}
-		if (value.neighbour === 0) {
+		if (cell.neighbour === 0) {
 			return null;
 		}
-		return value.neighbour;
+		return cell.neighbour;
 	};
+
 	return (
 		<StyledCell
-			className={value.isRevealed ? 'border-revealed' : 'border--concave'}
+			className={cell.isRevealed ? 'border--revealed' : 'border--concave'}
 			onClick={handleRevealCell}
-			data-x={value.x}
-			data-y={value.y}>
+			onContextMenu={contextMenu}
+			data-x={cell.x}
+			data-y={cell.y}>
 			{getValue()}
 		</StyledCell>
 	);
