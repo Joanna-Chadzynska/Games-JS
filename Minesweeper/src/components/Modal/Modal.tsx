@@ -1,19 +1,65 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
+import { AnimatePresence } from 'framer-motion';
+import { ModalContainer, ModalOverlay } from './styles';
 
-export interface ModalProps {}
+const modalRoot = document.getElementById('modal')! as HTMLDivElement;
 
-const Modal: React.SFC<ModalProps> = () => {
+type ModalProps = {
+	isOpen: any;
+	onClose: () => void;
+};
+
+const overlay = {
+	visible: {
+		opacity: 1,
+	},
+	hidden: {
+		opacity: 0,
+	},
+};
+
+const modal = {
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			delay: 0.5,
+		},
+	},
+	hidden: {
+		opacity: 0,
+		y: '-100vh',
+	},
+};
+
+const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
 	return (
-		<article className='modal hide' data-modal>
-			<section className='modal__content'>
-				<h2 className='modal__text' data-modal-header>
-					You won!
-				</h2>
-				<button className='modal__button' data-modal-button>
-					Play again!
-				</button>
-			</section>
-		</article>
+		isOpen &&
+		createPortal(
+			<AnimatePresence exitBeforeEnter>
+				<ModalOverlay
+					variants={overlay}
+					animate='visible'
+					initial='hidden'
+					exit='hidden'>
+					<ModalContainer variants={modal} animate='visible' initial='hidden'>
+						<section className='modal__content'>
+							<div className='modal__text' data-modal-header>
+								{children}
+							</div>
+							<button
+								className='modal__button'
+								data-modal-button
+								onClick={onClose}>
+								Close
+							</button>
+						</section>
+					</ModalContainer>
+				</ModalOverlay>
+			</AnimatePresence>,
+			modalRoot
+		)
 	);
 };
 
