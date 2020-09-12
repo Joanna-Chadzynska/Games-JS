@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyledHeader, HeaderCounter, HeaderReset } from './styles';
 
-export interface HeaderProps {}
+export interface HeaderProps {
+	mines: number;
+}
 
-const Header: React.SFC<HeaderProps> = () => {
+const Header: React.SFC<HeaderProps> = ({ mines }) => {
 	return (
 		<StyledHeader className=' border border--convex'>
-			<HeaderCounter data-counter>0</HeaderCounter>
+			<HeaderCounter data-counter>{mines}</HeaderCounter>
 			<HeaderReset className='border border--concave' data-button-reset>
 				reset
 			</HeaderReset>
