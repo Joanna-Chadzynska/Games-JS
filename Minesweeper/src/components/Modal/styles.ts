@@ -4,14 +4,21 @@ import { motion } from 'framer-motion';
 export const ModalContainer = styled(motion.div)`
 	background: azure;
 	border: 5px solid black;
-	height: 35vh;
+	height: 80vh;
 	max-height: 100%;
-	width: 60vh;
+	width: 90vh;
 	max-width: 100%;
 	overflow: auto;
 	padding: 20px;
 	text-align: center;
 	z-index: 1010;
+	position: relative;
+
+	button {
+		position: absolute;
+		top: 5%;
+		right: 5%;
+	}
 `;
 
 export const ModalOverlay = styled(motion.div)`
