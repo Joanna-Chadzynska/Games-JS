@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createDispatchHook, useDispatch } from 'react-redux';
 import { GameOptions } from '../../App';
 import { AppThunk, RootState } from '../../app/store';
-import { CellViewModel } from '../Board/CellViewModel';
-import { create2DArray } from './utils';
+import { countMaxMines, create2DArray } from './utils';
 
 export interface ICell {
 	x: number;
@@ -18,6 +16,7 @@ export interface GameState {
 	cols: number;
 	rows: number;
 	mines: number;
+	maxMines: number;
 	isGameFinished: boolean;
 	boardData: ICell[][];
 }
@@ -43,6 +42,7 @@ const initialState: GameState = {
 	cols: config.easy.cols,
 	rows: config.easy.rows,
 	mines: config.easy.mines,
+	maxMines: config.easy.mines,
 	isGameFinished: false,
 	boardData: [],
 };
@@ -52,16 +52,25 @@ export const gameSlice = createSlice({
 	initialState,
 	reducers: {
 		initBoardData: (state) => {
+			state.maxMines = countMaxMines(state.rows, state.cols);
 			let data = create2DArray(state.rows, state.cols);
 			state.boardData = data;
 		},
 		changeMode: (state, action) => {
 			const { cols, rows, mines } = action.payload;
+			state.boardData = [];
+
 			state.cols = cols;
 			state.rows = rows;
 			state.mines = mines;
+
 			let data = create2DArray(state.rows, state.cols);
+
 			state.boardData = data;
+		},
+
+		changeMaxMines: (state) => {
+			state.maxMines = countMaxMines(state.rows, state.cols);
 		},
 
 		cellClick: (state, action: PayloadAction<ICell>) => {
@@ -90,6 +99,7 @@ export const {
 	setFlag,
 	removeFlag,
 	changeMode,
+	changeMaxMines,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
