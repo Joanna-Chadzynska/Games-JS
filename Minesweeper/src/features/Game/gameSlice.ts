@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GameOptions } from '../../App';
 import { AppThunk, RootState } from '../../app/store';
-import { countMaxMines, create2DArray } from './utils';
+import {
+	countMaxMines,
+	create2DArray,
+	getNeighbours,
+	getRandomInteger,
+	revealCell,
+	revealMines,
+} from './utils';
 
 export interface ICell {
 	x: number;
@@ -10,6 +17,7 @@ export interface ICell {
 	isMine: boolean;
 	isFlagged: boolean;
 	neighbour: number;
+	isEmpty: boolean;
 }
 
 export interface GameState {
@@ -19,6 +27,10 @@ export interface GameState {
 	maxMines: number;
 	isGameFinished: boolean;
 	boardData: ICell[][];
+	cell: ICell;
+	cellsRevealed: number;
+	cellsToReveal: number;
+	isWin: boolean;
 }
 
 export interface CellProps {
@@ -45,28 +57,39 @@ const initialState: GameState = {
 	maxMines: config.easy.mines,
 	isGameFinished: false,
 	boardData: [],
+	cell: {} as ICell,
+	cellsToReveal: 0,
+	cellsRevealed: 0,
+	isWin: false,
 };
 
 export const gameSlice = createSlice({
 	name: 'game',
 	initialState,
 	reducers: {
-		initBoardData: (state) => {
-			state.maxMines = countMaxMines(state.rows, state.cols);
-			let data = create2DArray(state.rows, state.cols);
-			state.boardData = data;
-		},
-		changeMode: (state, action) => {
+		newGame: (state, action) => {
 			const { cols, rows, mines } = action.payload;
+			state.isGameFinished = false;
 			state.boardData = [];
-
 			state.cols = cols;
 			state.rows = rows;
 			state.mines = mines;
-
+			state.maxMines = countMaxMines(state.rows, state.cols);
 			let data = create2DArray(state.rows, state.cols);
-
 			state.boardData = data;
+
+			let minesPlanted = 0;
+			let minesToPlant = state.mines;
+			while (minesPlanted < minesToPlant) {
+				const rowIndex = getRandomInteger(0, state.rows - 1);
+				const colIndex = getRandomInteger(0, state.cols - 1);
+
+				if (state.boardData && !state.boardData[rowIndex][colIndex].isMine) {
+					state.boardData[rowIndex][colIndex].isMine = true;
+					minesPlanted++;
+				}
+			}
+			state.cellsToReveal = state.rows * state.cols - state.mines;
 		},
 
 		changeMaxMines: (state) => {
@@ -75,7 +98,29 @@ export const gameSlice = createSlice({
 
 		cellClick: (state, action: PayloadAction<ICell>) => {
 			const { x, y } = action.payload;
-			state.boardData[y][x].isRevealed = true;
+			if (state.boardData[y][x].isFlagged || state.isGameFinished) return;
+
+			if (state.boardData[y][x].isMine) {
+				state.isWin = false;
+				state.isGameFinished = true;
+				revealMines(state.boardData);
+			}
+
+			getNeighbours(
+				state.boardData[y][x],
+				state.rows,
+				state.cols,
+				state.boardData,
+				state
+			);
+
+			if (
+				state.cellsRevealed === state.cellsToReveal &&
+				!state.isGameFinished
+			) {
+				state.isWin = true;
+				state.isGameFinished = true;
+			}
 		},
 
 		setFlag: (state, action: PayloadAction<ICell>) => {
@@ -94,11 +139,10 @@ export const gameSlice = createSlice({
 });
 
 export const {
-	initBoardData,
+	newGame,
 	cellClick,
 	setFlag,
 	removeFlag,
-	changeMode,
 	changeMaxMines,
 } = gameSlice.actions;
 

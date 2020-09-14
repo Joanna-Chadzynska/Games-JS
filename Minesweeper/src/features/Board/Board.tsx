@@ -3,12 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GameOptions } from '../../App';
 import { RootState } from '../../app/store';
-import {
-	initBoardData,
-	cellClick,
-	setFlag,
-	removeFlag,
-} from '../Game/gameSlice';
+import { newGame, cellClick, setFlag, removeFlag } from '../Game/gameSlice';
 import Cell from './Cell';
 import { StyledBoard } from './styles';
 
@@ -19,6 +14,7 @@ export interface ICell {
 	isMine: boolean;
 	isFlagged: boolean;
 	neighbour: number;
+	isEmpty: boolean;
 }
 
 export type BoardProps = {
@@ -29,7 +25,7 @@ const Board: React.SFC<BoardProps> = React.memo(({ config }) => {
 	const game = useSelector((state: RootState) => state.game);
 
 	useEffect(() => {
-		dispatch(initBoardData());
+		dispatch(newGame(config.easy));
 	}, [dispatch]);
 
 	const handleContextMenu = (
@@ -38,13 +34,17 @@ const Board: React.SFC<BoardProps> = React.memo(({ config }) => {
 	) => {
 		e.preventDefault();
 
-		if (data.isRevealed) return;
+		if (data.isRevealed || game.isGameFinished) return;
 
 		if (data.isFlagged) {
 			dispatch(removeFlag(data));
 			return;
 		} else {
 			dispatch(setFlag(data));
+		}
+
+		if (game.mines === 0) {
+			console.log('win');
 		}
 	};
 

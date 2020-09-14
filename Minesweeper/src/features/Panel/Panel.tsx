@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMode, changeMaxMines } from '../Game/gameSlice';
+import { changeMaxMines, newGame } from '../Game/gameSlice';
 import {
 	StyledPanel,
 	PanelButtons,
@@ -38,25 +38,23 @@ const Panel: React.SFC<PanelProps> = memo(({ config }) => {
 			[name]: Number(value),
 		});
 		dispatch(changeMaxMines());
-		dispatch(changeMode(ranges));
+		dispatch(newGame(ranges));
 	};
 
 	const handleChangeMode = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.currentTarget.value;
+		console.log(target);
 
 		switch (target) {
 			case 'normal':
-				return dispatch(changeMode(config.normal));
+				return dispatch(newGame(config.normal));
 
 			case 'expert':
-				return dispatch(changeMode(config.expert));
-
-			case 'custom':
-				return console.log('custom');
+				return dispatch(newGame(config.expert));
 
 			case 'easy':
 			default:
-				return dispatch(changeMode(config.easy));
+				return dispatch(newGame(config.easy));
 		}
 	};
 

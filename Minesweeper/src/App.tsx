@@ -44,7 +44,7 @@ const App = () => {
 		<Theme>
 			<GlobalStyle />
 			<Main cellsInRow={game.cols}>
-				<Header mines={game.mines} />
+				<Header config={config} />
 				<Board config={config} />
 				<Panel config={config} />
 			</Main>

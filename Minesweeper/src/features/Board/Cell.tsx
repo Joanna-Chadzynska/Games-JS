@@ -31,6 +31,7 @@ const Cell: React.SFC<CellProps> = ({
 			className={cell.isRevealed ? 'border--revealed' : 'border--concave'}
 			onClick={handleRevealCell}
 			onContextMenu={contextMenu}
+			style={{ backgroundColor: cell.isMine ? 'red' : '' }}
 			data-x={cell.x}
 			data-y={cell.y}>
 			{getValue()}
