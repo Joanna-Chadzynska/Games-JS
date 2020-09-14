@@ -1,12 +1,20 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeMode } from '../Game/gameSlice';
-import { StyledPanel, PanelButtons } from './styles';
+import { changeMode, changeMaxMines } from '../Game/gameSlice';
+import {
+	StyledPanel,
+	PanelButtons,
+	RangeContainer,
+	RangeWrap,
+	BubbleRangeWrap,
+	BubbleRange,
+} from './styles';
 import { CustomButton } from '../../styles/shared/CustomStyles';
 import { GameOptions } from '../../App';
 import { useModal } from '../../hooks/useModal';
 import Modal from '../../components/Modal/Modal';
-import { randomBytes } from 'crypto';
+import { RootState } from '../../app/store';
+import { setBubblePosition } from '../Game/utils';
 
 export interface PanelProps {
 	config: GameOptions;
@@ -14,44 +22,23 @@ export interface PanelProps {
 
 const Panel: React.SFC<PanelProps> = memo(({ config }) => {
 	const { toggleModal, showModal } = useModal();
-
 	const dispatch = useDispatch();
+	const game = useSelector((state: RootState) => state.game);
 
 	const [ranges, setRanges] = useState({
-		columns: 0,
-		rows: 0,
-		mines: 0,
+		cols: 9,
+		rows: 9,
+		mines: 10,
 	});
-	const countMaxMines = (row: number, col: number) => {
-		let width = col - 1;
-		let height = row - 1;
-
-		return width * height;
-	};
 
 	const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = e.target;
 		setRanges({
 			...ranges,
-			[name]: value,
+			[name]: Number(value),
 		});
-	};
-	const min = countMaxMines(Number(ranges.rows), Number(ranges.columns));
-	// console.log(min);
-
-	const rangeParams = {
-		cols: {
-			minCols: 9,
-			maxCols: 30,
-		},
-		rows: {
-			minRows: 9,
-			maxRows: 24,
-		},
-		mines: {
-			minMines: 10,
-			maxMines: countMaxMines(24, 30),
-		},
+		dispatch(changeMaxMines());
+		dispatch(changeMode(ranges));
 	};
 
 	const handleChangeMode = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -116,45 +103,81 @@ const Panel: React.SFC<PanelProps> = memo(({ config }) => {
 			</PanelButtons>
 			<Modal isOpen={showModal} onClose={toggleModal}>
 				<p>select custom properties</p>
-				<fieldset>
-					<label htmlFor='cols'>Columns</label>
-					<input
-						onChange={handleRangeChange}
-						type='range'
-						name='columns'
-						id='cols'
-						value={ranges.columns}
-						min={rangeParams.cols.minCols}
-						max={rangeParams.cols.maxCols}
-					/>
-					<output id='cols'>{ranges.columns}</output>
-				</fieldset>
-				<fieldset>
-					<label htmlFor='rows'>Rows</label>
-					<input
-						onChange={handleRangeChange}
-						type='range'
-						name='rows'
-						id='rows'
-						value={ranges.rows}
-						min={rangeParams.rows.minRows}
-						max={rangeParams.rows.maxRows}
-					/>
-					<output id='rows'>{ranges.rows}</output>
-				</fieldset>
-				<fieldset>
-					<label htmlFor='mines'>Mines</label>
-					<input
-						onChange={handleRangeChange}
-						type='range'
-						name='mines'
-						id='mines'
-						value={ranges.mines}
-						min={rangeParams.mines.minMines}
-						max={rangeParams.mines.maxMines}
-					/>
-					<output id='mines'>{ranges.mines}</output>
-				</fieldset>
+				<RangeContainer>
+					<label>Columns</label>
+
+					<RangeWrap>
+						<span>9</span>
+						<BubbleRangeWrap>
+							<input
+								onChange={handleRangeChange}
+								type='range'
+								name='cols'
+								id='cols'
+								value={game.cols}
+								min='9'
+								max='30'
+							/>
+							<BubbleRange id='cols' left={setBubblePosition(game.cols, 9, 30)}>
+								{ranges.cols}
+							</BubbleRange>
+						</BubbleRangeWrap>
+
+						<span>30</span>
+					</RangeWrap>
+				</RangeContainer>
+
+				<RangeContainer>
+					<label>Rows</label>
+
+					<RangeWrap>
+						<span>9</span>
+
+						<BubbleRangeWrap>
+							<input
+								onChange={handleRangeChange}
+								type='range'
+								name='rows'
+								id='rows'
+								value={game.rows}
+								min='9'
+								max='24'
+							/>
+							<BubbleRange id='rows' left={setBubblePosition(game.rows, 9, 24)}>
+								{ranges.rows}
+							</BubbleRange>
+						</BubbleRangeWrap>
+
+						<span>24</span>
+					</RangeWrap>
+				</RangeContainer>
+
+				<RangeContainer>
+					<label>Mines</label>
+
+					<RangeWrap>
+						<span>10</span>
+
+						<BubbleRangeWrap>
+							<input
+								onChange={handleRangeChange}
+								type='range'
+								name='mines'
+								id='mines'
+								value={game.mines}
+								min='10'
+								max={game.maxMines}
+							/>
+							<BubbleRange
+								id='mines'
+								left={setBubblePosition(game.mines, 10, game.maxMines)}>
+								{game.mines}
+							</BubbleRange>
+						</BubbleRangeWrap>
+
+						<span>{game.maxMines}</span>
+					</RangeWrap>
+				</RangeContainer>
 			</Modal>
 		</StyledPanel>
 	);

@@ -48,9 +48,6 @@ const Board: React.SFC<BoardProps> = React.memo(({ config }) => {
 		}
 	};
 
-	const getRandomNumber = (dimension: number) =>
-		Math.floor(Math.random() * 1000 + 1) % dimension;
-
 	return (
 		<StyledBoard className='border border--convex'>
 			{game.boardData !== undefined &&
