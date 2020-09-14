@@ -24,8 +24,9 @@ export const HeaderReset = styled.button`
 	justify-content: center;
 	outline: none;
 	background-color: ${({ theme }) => theme.colors.primary.light};
-	svg {
+	span {
 		width: 4.8rem;
 		height: 4.8rem;
+		font-size: 3rem;
 	}
 `;

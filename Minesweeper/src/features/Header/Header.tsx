@@ -10,7 +10,9 @@ const Header: React.SFC<HeaderProps> = ({ mines }) => {
 		<StyledHeader className=' border border--convex'>
 			<HeaderCounter data-counter>{mines}</HeaderCounter>
 			<HeaderReset className='border border--concave' data-button-reset>
-				reset
+				<span role='img' aria-label='happy emoji'>
+					🙂
+				</span>
 			</HeaderReset>
 			<HeaderCounter data-timer>000</HeaderCounter>
 		</StyledHeader>
