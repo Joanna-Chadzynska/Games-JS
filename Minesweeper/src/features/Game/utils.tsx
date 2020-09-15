@@ -91,8 +91,6 @@ export const getNeighbours = (
 	}
 };
 
-export const endGame = (isWin: boolean) => {};
-
 export const revealCell = (cell: ICell) => (cell.isRevealed = true);
 
 export const revealMines = (cells: ICell[][]) => {
