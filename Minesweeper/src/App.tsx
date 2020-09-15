@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import './styles/app.scss';
-
-import Theme from './styles/themes/theme';
-import { Main } from './styles/App.styles';
-import { GlobalStyle } from './styles/globalStyles';
-import { Header, Board, Panel } from './features';
 import { RootState } from './app/store';
+import { useModal } from './hooks/useModal';
+import { GlobalStyle } from './styles/globalStyles';
+import Theme from './styles/themes/theme';
+
+import { Main } from './styles/App.styles';
+import { Header, Board, Panel } from './features';
+import Modal from './components/Modal/Modal';
+
+import './styles/app.scss';
 
 export type GameOptions = {
 	easy: {
@@ -34,12 +37,23 @@ export type GameOptions = {
 
 const App = () => {
 	const game = useSelector((state: RootState) => state.game);
+	const [showModal, setShowModal] = useState(false);
+
+	const toggleModal = () => {
+		if (showModal) {
+			setShowModal(false);
+		} else {
+			setShowModal(true);
+		}
+	};
 	const config: GameOptions = {
 		easy: { cols: 9, rows: 9, mines: 10 },
 		normal: { cols: 16, rows: 16, mines: 40 },
 		expert: { cols: 30, rows: 16, mines: 99 },
 		custom: { cols: 9, rows: 5, mines: 10 },
 	};
+	console.log(showModal);
+
 	return (
 		<Theme>
 			<GlobalStyle />
@@ -48,6 +62,9 @@ const App = () => {
 				<Board config={config} />
 				<Panel config={config} />
 			</Main>
+			<Modal onClose={toggleModal} isOpen={game.isGameFinished ? true : false}>
+				<h3>game result</h3>
+			</Modal>
 		</Theme>
 	);
 };
