@@ -5,5 +5,5 @@ export const useModal = () => {
 
 	const toggleModal = () => setShowModal(!showModal);
 
-	return { showModal, toggleModal };
+	return { showModal, toggleModal, setShowModal };
 };
