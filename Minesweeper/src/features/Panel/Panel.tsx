@@ -43,7 +43,6 @@ const Panel: React.SFC<PanelProps> = memo(({ config }) => {
 
 	const handleChangeMode = (e: React.MouseEvent<HTMLButtonElement>) => {
 		const target = e.currentTarget.value;
-		console.log(target);
 
 		switch (target) {
 			case 'normal':
