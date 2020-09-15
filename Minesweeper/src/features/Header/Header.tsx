@@ -2,7 +2,8 @@ import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { GameOptions } from '../../App';
 import { RootState } from '../../app/store';
-import { newGame } from '../Game/gameSlice';
+
+import { newGame, setIntervalId, updateTimer } from '../Game/gameSlice';
 import { StyledHeader, HeaderCounter, HeaderReset } from './styles';
 
 export interface HeaderProps {
@@ -11,15 +12,21 @@ export interface HeaderProps {
 
 const Header: React.SFC<HeaderProps> = memo(({ config }) => {
 	const dispatch = useDispatch();
+
 	const game = useSelector((state: RootState) => state.game);
-	console.log(game.cols);
 
 	const handleResetGame = () => {
 		dispatch(newGame({ cols: game.cols, rows: game.rows, mines: game.mines }));
+
+		const interval = setInterval(() => {
+			dispatch(updateTimer());
+		}, 1000);
+		dispatch(setIntervalId(interval));
 	};
+
 	return (
 		<StyledHeader className=' border border--convex'>
-			<HeaderCounter data-counter>{game.mines}</HeaderCounter>
+			<HeaderCounter data-counter>{game.counter}</HeaderCounter>
 			<HeaderReset
 				className='border border--concave'
 				data-button-reset
@@ -38,7 +45,7 @@ const Header: React.SFC<HeaderProps> = memo(({ config }) => {
 					</span>
 				)}
 			</HeaderReset>
-			<HeaderCounter data-timer>000</HeaderCounter>
+			<HeaderCounter data-timer>{game.timer.numberOfSeconds}</HeaderCounter>
 		</StyledHeader>
 	);
 });
