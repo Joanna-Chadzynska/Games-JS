@@ -3,7 +3,14 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GameOptions } from '../../App';
 import { RootState } from '../../app/store';
-import { newGame, cellClick, setFlag, removeFlag } from '../Game/gameSlice';
+import {
+	newGame,
+	cellClick,
+	setFlag,
+	removeFlag,
+	updateTimer,
+	setIntervalId,
+} from '../Game/gameSlice';
 import Cell from './Cell';
 import { StyledBoard } from './styles';
 
@@ -22,10 +29,16 @@ export type BoardProps = {
 };
 const Board: React.SFC<BoardProps> = React.memo(({ config }) => {
 	const dispatch = useDispatch();
+
 	const game = useSelector((state: RootState) => state.game);
 
 	useEffect(() => {
 		dispatch(newGame(config.easy));
+		const interval = setInterval(() => {
+			dispatch(updateTimer());
+		}, 1000);
+		dispatch(setIntervalId(interval));
+		return () => clearInterval(interval);
 	}, [dispatch]);
 
 	const handleContextMenu = (
@@ -41,10 +54,6 @@ const Board: React.SFC<BoardProps> = React.memo(({ config }) => {
 			return;
 		} else {
 			dispatch(setFlag(data));
-		}
-
-		if (game.mines === 0) {
-			console.log('win');
 		}
 	};
 
