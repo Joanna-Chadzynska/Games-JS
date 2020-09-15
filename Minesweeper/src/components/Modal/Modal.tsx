@@ -6,8 +6,8 @@ import { ModalContainer, ModalOverlay } from './styles';
 const modalRoot = document.getElementById('modal')! as HTMLDivElement;
 
 type ModalProps = {
-	isOpen: any;
-	onClose: () => void;
+	isOpen?: any;
+	onClose?: () => void | boolean;
 };
 
 const overlay = {
