@@ -52,7 +52,6 @@ const App = () => {
 		expert: { cols: 30, rows: 16, mines: 99 },
 		custom: { cols: 9, rows: 5, mines: 10 },
 	};
-	console.log(showModal);
 
 	return (
 		<Theme>
@@ -62,9 +61,9 @@ const App = () => {
 				<Board config={config} />
 				<Panel config={config} />
 			</Main>
-			<Modal onClose={toggleModal} isOpen={game.isGameFinished ? true : false}>
+			{/* <Modal onClose={toggleModal} isOpen={game.isGameFinished ? true : false}>
 				<h3>game result</h3>
-			</Modal>
+			</Modal> */}
 		</Theme>
 	);
 };
