@@ -10,6 +10,10 @@ export const Main = styled.main<GameProps>`
 		4rem * ${(props) => (props.cellsInRow ? props.cellsInRow : 9)} +
 			calc(2 * 1.5rem) + calc(2 * 0.3rem)
 	);
+	min-width: calc(
+		4rem * ${(props) => (props.cellsInRow ? props.cellsInRow : 9)} +
+			calc(2 * 1.5rem) + calc(2 * 0.3rem)
+	);
 	margin: 0 auto;
 	padding: ${({ theme }) => theme.gameSizes.gamePadding};
 `;

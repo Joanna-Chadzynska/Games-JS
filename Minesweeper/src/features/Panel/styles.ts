@@ -11,8 +11,24 @@ export const StyledPanel = styled.article`
 	}
 `;
 
-export const PanelButtons = styled.section`
+export const PanelButtonsContainer = styled.section`
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+`;
+
+export const PanelButton = styled.button`
+	background: radial-gradient(ellipse at center, #00bfff 0%, #1e90ff 100%);
+	border-color: #fff ${({ theme }) => theme.colors.primary.dark}
+		${({ theme }) => theme.colors.primary.dark} #fff;
+	flex: 1;
+	padding: 0.875em 1em;
+	font-size: 2.25rem;
+	transition: transform 0.3s ease-in-out;
+
+	&:hover {
+		transform: scale(1.02);
+	}
 `;
 
 export const RangeContainer = styled.fieldset`
@@ -44,13 +60,12 @@ export const BubbleRangeWrap = styled.div`
 
 export const BubbleRange = styled.output<BubbleProps>`
 	background: red;
+	border-radius: 5px;
 	color: white;
 	padding: 4px 12px;
 	position: absolute;
-	border-radius: 5px;
 	top: 4.25rem;
 	left: calc(${(props) => props.left}%);
-	/* left: ${(props) => props.left}%; */
 	transform: translateX(-50%);
 
 	&::after {

@@ -45,8 +45,9 @@ export const GlobalStyle = createGlobalStyle`
         cursor: pointer;
     }
 
-    .border {
+.border {
   border: ${({ theme }) => theme.gameSizes.borderWidth} solid;
+  
 }
 .border--convex {
   border-color: ${({ theme }) => theme.colors.primary.dark} #fff #fff ${({
@@ -63,28 +64,5 @@ export const GlobalStyle = createGlobalStyle`
   border-color: ${({ theme }) => theme.colors.primary.dark};
 }
 
-.cell-info-1 {
-  color: var(--info-one-color);
-}
-.cell-info-2 {
-  color: var(--info-two-color);
-}
-.cell-info-3 {
-  color: var(--info-three-color);
-}
-.cell-info-4 {
-  color: var(--info-four-color);
-}
-.cell-info-5 {
-  color: var(--info-five-color);
-}
-.cell-info-6 {
-  color: var(--info-six-color);
-}
-.cell-info-7 {
-  color: var(--info-seven-color);
-}
-.cell-info-8 {
-  color: var(--info-eight-color);
-}
+
 `;
