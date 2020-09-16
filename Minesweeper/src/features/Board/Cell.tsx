@@ -1,6 +1,6 @@
 import React from 'react';
 import { ICell } from '../Game/gameSlice';
-import { StyledCell } from './styles';
+import { CellValue, StyledCell } from './styles';
 
 export interface CellProps {
 	handleRevealCell?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -28,13 +28,18 @@ const Cell: React.SFC<CellProps> = ({
 
 	return (
 		<StyledCell
-			className={cell.isRevealed ? 'border--revealed' : 'border--concave'}
+			className={
+				cell.isRevealed ? 'border border--revealed' : 'border border--concave'
+			}
 			onClick={handleRevealCell}
 			onContextMenu={contextMenu}
-			// style={{ backgroundColor: cell.isMine ? 'red' : '' }}
 			data-x={cell.x}
-			data-y={cell.y}>
-			{getValue()}
+			data-y={cell.y}
+			cell={cell}
+			role='button'>
+			<CellValue value={cell.neighbour} cell={cell}>
+				{getValue()}
+			</CellValue>
 		</StyledCell>
 	);
 };
