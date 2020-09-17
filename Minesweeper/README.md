@@ -1,44 +1,91 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Minesweeper
 
-## Available Scripts
+Minesweeper game based on React, React Redux with Redux Toolkit, TypeScript, Styled Components
 
-In the project directory, you can run:
+## Table of contents
 
-### `npm start`
+- [Minesweeper](#minesweeper)
+  - [Table of contents](#table-of-contents)
+  - [General info](#general-info)
+  - [Screenshots](#screenshots)
+  - [Technologies](#technologies)
+  - [Setup](#setup)
+  - [Demo](#demo)
+  - [Features](#features)
+  - [Status](#status)
+  - [Contact](#contact)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## General info
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Minesweeper is a single-player puzzle video game. The objective of the game is to clear a rectangular board containing hidden "mines" or bombs without detonating any of them, with help from clues about the number of neighboring mines in each field.
 
-### `npm test`
+## Screenshots
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Game](../minesweeper/src/assets/images/game.png)
 
-### `npm run build`
+![Easy mode](../minesweeper/src/assets/images/easy.png)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Customize](../minesweeper/src/assets/images/customize.png)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Technologies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [React](https://pl.reactjs.org/) - version 16.13.1
+- [React Redux](https://react-redux.js.org/) - version 7.2.1
+- [Redux Toolkit](https://redux-toolkit.js.org/) - version 3.8.3
+- [Styled Components](https://styled-components.com/) - version 5.2.0
+- [TypeScript](https://www.typescriptlang.org/) - version 3.8.3
 
-### `npm run eject`
+## Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Clone the repo
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+git clone https://github.com/Joanna-Chadzynska/Games-JS
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+cd Minesweeper
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+2. Install NPM packages
 
-## Learn More
+```sh
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Start dev mode
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm start
+```
+
+4. Build version
+
+```
+npm run build
+```
+
+## Demo
+
+<!-- <https://magic21.netlify.app/> -->
+
+## Features
+
+List of features ready and TODOs for future development
+
+- Game mode selection
+- Restart game in every mode (even if board is customized)
+
+To-do list:
+
+- Add unit tests using
+- Fix timer
+- Change layout
+
+## Status
+
+Project is: _finished_
+
+## Contact
+
+Created by [Joanna Chądzyńska](https://www.linkedin.com/in/joanna-chądzyńska/) - feel free to contact me!

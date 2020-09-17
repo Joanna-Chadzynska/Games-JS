@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
 import { useModal } from './hooks/useModal';
-import { GlobalStyle } from './styles/globalStyles';
-import Theme from './styles/themes/theme';
+import { GlobalStyle } from './assets/styles/globalStyles';
+import Theme from './assets/styles/themes/theme';
 
-import { Main } from './styles/App.styles';
+import { Main } from './assets/styles/App.styles';
 import { Header, Board, Panel } from './features';
 import Modal from './components/Modal/Modal';
-
-import './styles/app.scss';
 
 export type GameOptions = {
 	easy: {

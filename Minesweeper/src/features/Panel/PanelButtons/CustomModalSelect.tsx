@@ -8,6 +8,7 @@ import {
 	RangeWrap,
 	BubbleRangeWrap,
 	BubbleRange,
+	ModalContainer,
 } from '../styles';
 
 export interface CustomModalSelectProps {}
@@ -30,8 +31,8 @@ const CustomModalSelect: React.SFC<CustomModalSelectProps> = () => {
 		dispatch(newGame(ranges));
 	};
 	return (
-		<>
-			<p>select custom properties</p>
+		<ModalContainer>
+			<h1>Select custom properties</h1>
 			<RangeContainer>
 				<label>Columns</label>
 
@@ -107,7 +108,7 @@ const CustomModalSelect: React.SFC<CustomModalSelectProps> = () => {
 					<span>{game.maxMines}</span>
 				</RangeWrap>
 			</RangeContainer>
-		</>
+		</ModalContainer>
 	);
 };
 

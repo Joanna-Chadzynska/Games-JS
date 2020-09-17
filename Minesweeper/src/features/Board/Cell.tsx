@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 import { ICell } from '../Game/gameSlice';
 import { CellValue, StyledCell } from './styles';
 
@@ -13,6 +15,8 @@ const Cell: React.SFC<CellProps> = ({
 	contextMenu,
 	cell,
 }) => {
+	const game = useSelector((state: RootState) => state.game);
+
 	const getValue = () => {
 		if (!cell.isRevealed) {
 			return cell.isFlagged ? '🚩' : null;
@@ -37,7 +41,10 @@ const Cell: React.SFC<CellProps> = ({
 			data-y={cell.y}
 			cell={cell}
 			role='button'>
-			<CellValue value={cell.neighbour} cell={cell}>
+			<CellValue
+				value={cell.neighbour}
+				cell={cell}
+				isGameFinished={game.isGameFinished}>
 				{getValue()}
 			</CellValue>
 		</StyledCell>

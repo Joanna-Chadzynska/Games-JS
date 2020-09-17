@@ -44,17 +44,8 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
 					initial='hidden'
 					exit='hidden'>
 					<ModalContainer variants={modal} animate='visible' initial='hidden'>
-						<section className='modal__content'>
-							<div className='modal__text' data-modal-header>
-								{children}
-							</div>
-						</section>
-						<button
-							className='modal__button'
-							data-modal-button
-							onClick={onClose}>
-							X
-						</button>
+						<section>{children}</section>
+						<button onClick={onClose}>X</button>
 					</ModalContainer>
 				</ModalOverlay>
 			</AnimatePresence>,
