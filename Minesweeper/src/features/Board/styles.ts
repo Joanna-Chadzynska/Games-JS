@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
 type CellProps = {
-	isRevealed?: boolean;
-	isMine?: boolean;
 	value?: number;
 	cell?: {
 		isMine: boolean;
 		isRevealed: boolean;
 		isFlagged: boolean;
 	};
+	isGameFinished?: boolean;
 };
 
 export const StyledBoard = styled.div`
@@ -27,12 +26,12 @@ export const StyledCell = styled.button<CellProps>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 4rem;
-	height: 4rem;
+	width: ${({ theme }) => theme.gameSizes.cellSize};
+	height: ${({ theme }) => theme.gameSizes.cellSize};
 
 	&:focus {
-		background: ${({ cell, theme }) =>
-			cell?.isMine ? theme.colors.alarm : ''};
+		background: ${({ cell, theme, isGameFinished }) =>
+			isGameFinished ? theme.colors.alarm : ''};
 	}
 `;
 

@@ -31,6 +31,17 @@ export const PanelButton = styled.button`
 	}
 `;
 
+// Range Modal
+export const ModalContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: inherit;
+	h1 {
+		font-size: 2.5rem;
+	}
+`;
+
 export const RangeContainer = styled.fieldset`
 	label {
 		padding-bottom: 0.5em;
@@ -43,7 +54,7 @@ export const RangeWrap = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	gap: 0.5em;
-	margin: 0 auto 3rem;
+	margin: 0 auto 5rem;
 	span {
 		font-size: 2rem;
 	}
@@ -64,7 +75,7 @@ export const BubbleRange = styled.output<BubbleProps>`
 	color: white;
 	padding: 4px 12px;
 	position: absolute;
-	top: 4.25rem;
+	top: 3rem;
 	left: calc(${(props) => props.left}%);
 	transform: translateX(-50%);
 
