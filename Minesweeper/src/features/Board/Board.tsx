@@ -31,7 +31,7 @@ const Board: React.SFC<BoardProps> = React.memo(({ config }) => {
 	const dispatch = useDispatch();
 
 	const game = useSelector((state: RootState) => state.game);
-
+	// eslint-disable-next-line to the line before.
 	useEffect(() => {
 		dispatch(newGame(config.easy));
 		const interval = setInterval(() => {
